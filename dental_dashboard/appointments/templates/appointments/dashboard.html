@@ -1,0 +1,44 @@
+{% extends "appointments/base.html" %}
+{% block content %}
+<div class="top-bar">
+    <h2>All Appointments</h2>
+    <a href="{% url 'add_appointment' %}" class="btn btn-primary">+ New Appointment</a>
+</div>
+
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Phone</th>
+        <th>Location</th>
+        <th>Service</th>
+        <th>Date</th>
+        <th>Time</th>
+        <th>Status</th>
+        <th>Actions</th>
+    </tr>
+    {% for a in appointments %}
+    <tr>
+        <td>{{ a.id }}</td>
+        <td>{{ a.name }}</td>
+        <td>{{ a.phone }}</td>
+        <td>{{ a.location }}</td>
+        <td>{{ a.service }}</td>
+        <td>{{ a.date }}</td>
+        <td>{{ a.time }}</td>
+        <td><span class="status status-{{ a.status }}">{{ a.get_status_display }}</span></td>
+        <td class="actions">
+            <a href="{% url 'edit_appointment' a.id %}" class="btn btn-edit">Edit</a>
+            {% if a.status == "booked" or a.status == "rescheduled" %}
+            <a href="{% url 'cancel_appointment' a.id %}" class="btn btn-cancel"
+               onclick="return confirm('Cancel this appointment?');">Cancel</a>
+            {% endif %}
+            <a href="{% url 'delete_appointment' a.id %}" class="btn btn-delete"
+               onclick="return confirm('Delete permanently?');">Delete</a>
+        </td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="9" style="text-align:center; padding:25px;">No appointments yet.</td></tr>
+    {% endfor %}
+</table>
+{% endblock %}

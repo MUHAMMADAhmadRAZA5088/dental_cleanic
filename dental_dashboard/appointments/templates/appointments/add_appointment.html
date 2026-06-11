@@ -1,0 +1,35 @@
+{% extends "appointments/base.html" %}
+{% block content %}
+<div class="form-box">
+    <h2>New Appointment</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <label>Patient Name</label>
+        <input type="text" name="name" required>
+
+        <label>Phone Number</label>
+        <input type="text" name="phone" required>
+
+        <label>Location</label>
+        <select name="location">
+            <option value="Jackson Heights">Jackson Heights - 8202 Roosevelt Ave</option>
+            <option value="Woodside">Woodside - 39-72 61st St</option>
+        </select>
+
+        <label>Service</label>
+        <input type="text" name="service" placeholder="e.g. Cleaning, Filling, Whitening" required>
+
+        <label>Date</label>
+        <input type="date" name="date" required>
+
+        <label>Time</label>
+        <input type="time" name="time" required>
+
+        <label>Notes</label>
+        <textarea name="notes" rows="3"></textarea>
+
+        <button type="submit" class="btn btn-primary">Save Appointment</button>
+        <a href="{% url 'dashboard' %}" class="btn" style="background:#9ca3af; color:#fff;">Cancel</a>
+    </form>
+</div>
+{% endblock %}
